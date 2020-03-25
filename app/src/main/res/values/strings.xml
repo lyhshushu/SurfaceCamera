@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SurfaceCamera</string>
+    <string name="getPermission">用户给权限</string>
+    <string name="denyPermission">用户拒绝权限</string>
+    <string name="please_change_camera">请切换到后置摄像头</string>
+    <string name="take_photo">点击拍照</string>
+    <string name="test_word">测试文字</string>
+</resources>
