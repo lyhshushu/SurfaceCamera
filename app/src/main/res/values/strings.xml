@@ -5,4 +5,5 @@
     <string name="please_change_camera">请切换到后置摄像头</string>
     <string name="take_photo">点击拍照</string>
     <string name="test_word">测试文字</string>
+    <string name="camera_tips">请将头部位于头像框内</string>
 </resources>

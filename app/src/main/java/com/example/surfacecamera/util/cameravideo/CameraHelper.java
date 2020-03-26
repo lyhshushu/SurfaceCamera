@@ -1492,8 +1492,8 @@ public class CameraHelper implements ICamera2, AwbSeekBar.OnAwbSeekBarChangeList
      */
     public Uri getUriFromFile(Context context, File file) {
         if (Build.VERSION.SDK_INT >= 28) {
-            return Uri.fromFile(file);
-//            return FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
+//            return Uri.fromFile(file);
+            return FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
         } else {
             return Uri.fromFile(file);
         }

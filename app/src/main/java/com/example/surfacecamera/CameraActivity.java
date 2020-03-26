@@ -154,8 +154,8 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
                         break;
                     case 2:
                         light_type = 0;
-//                        ibFlash.setImageResource(R.drawable.light_off);
-                        ibFlash.setBackground(getDrawable(R.drawable.light_off));
+//                        ibFlash.setImageResource(R.drawable.light_on);
+                        ibFlash.setBackground(getDrawable(R.drawable.light_on));
                         parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
                         mCamera.setParameters(parameters);
                         break;

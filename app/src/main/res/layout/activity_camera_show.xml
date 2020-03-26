@@ -47,8 +47,22 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/light_off"
+        android:background="@drawable/light_on"
         android:scaleType="center" />
+    <TextView
+        android:id="@+id/tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/head_pic"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:text="@string/camera_tips"/>
+    <ImageView
+        android:id="@+id/head_pic"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/smile_face"/>
 
     <ImageView
         android:id="@+id/video_switch_camera"

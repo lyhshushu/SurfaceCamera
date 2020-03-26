@@ -191,6 +191,16 @@ public class CameraShowActivity extends BaseActivity implements IVideoControl.Pl
 
     @BindView(R.id.txt_sb_txt)
     TextView tvSbTxt;
+    /**
+     * 头部框
+     */
+    @BindView(R.id.head_pic)
+    ImageView headPic;
+    /**
+     * 提示tips
+     */
+    @BindView(R.id.tips)
+    TextView tips;
 
     /**
      * 视频播放器
@@ -507,7 +517,7 @@ public class CameraShowActivity extends BaseActivity implements IVideoControl.Pl
         mVideoPlayer.setLoopPlay(true);
         List<String> menus = new ArrayList<>();
         menus.add("拍照");
-        menus.add("录像");
+//        menus.add("录像");
         menus.add("曝光");
         menus.add("白平衡");
         menus.add("效果");
@@ -593,17 +603,17 @@ public class CameraShowActivity extends BaseActivity implements IVideoControl.Pl
                 mCameraTouch.resetScale();
                 break;
             case R.id.video_switch_flash:
-                    Object o = videoSwitchFlash.getTag();
+                Object o = videoSwitchFlash.getTag();
                 if (o == null || ((int) o) == 0) {
                     videoSwitchFlash.setBackgroundResource(R.drawable.light_auto);
                     videoSwitchFlash.setTag(1);
                     cameraHelper.flashSwitchState(ICamera2.FlashState.AUTO);
                 } else if (((int) o) == 1) {
-                    videoSwitchFlash.setBackgroundResource(R.drawable.light_on);
+                    videoSwitchFlash.setBackgroundResource(R.drawable.light_off);
                     videoSwitchFlash.setTag(2);
                     cameraHelper.flashSwitchState(ICamera2.FlashState.OPEN);
                 } else {
-                    videoSwitchFlash.setBackgroundResource(R.drawable.light_off);
+                    videoSwitchFlash.setBackgroundResource(R.drawable.light_on);
                     videoSwitchFlash.setTag(0);
                     cameraHelper.flashSwitchState(ICamera2.FlashState.CLOSE);
                 }
@@ -755,35 +765,35 @@ public class CameraShowActivity extends BaseActivity implements IVideoControl.Pl
                 videoHintText.setText("点击拍照");
                 break;
             }
-            case 1: {
-                showLayout(0, false);
-                NOW_MODE = AppConstant.VIDEO_RECORD_MODE;
-                cameraHelper.setCameraState(ICamera2.CameraMode.RECORD_VIDEO);
-                videoHintText.setText("点击录像");
-                break;
-            }
+//            case 1: {
+//                showLayout(0, false);
+//                NOW_MODE = AppConstant.VIDEO_RECORD_MODE;
+//                cameraHelper.setCameraState(ICamera2.CameraMode.RECORD_VIDEO);
+//                videoHintText.setText("点击录像");
+//                break;
+//            }
             // 调整 曝光
-            case 2: {
+            case 1: {
                 showLayout(SHOW_AE, true);
                 break;
             }
             // 调整 白平衡
-            case 3: {
+            case 2: {
                 showLayout(SHOW_AWB, true);
                 break;
             }
             // 调整 效果
-            case 4: {
+            case 3: {
                 showLayout(3, true);
                 break;
             }
             // 调整 感觉
-            case 5: {
+            case 4: {
                 showLayout(4, true);
                 break;
             }
             // 调整 感觉
-            case 6: {
+            case 5: {
                 showLayout(5, true);
                 break;
             }
@@ -924,6 +934,8 @@ public class CameraShowActivity extends BaseActivity implements IVideoControl.Pl
         TEXTURE_STATE = AppConstant.TEXTURE_PREVIEW_STATE;
         hindRecordEndView();
         videoSwitchCamera.setVisibility(View.VISIBLE);
+        headPic.setVisibility(View.VISIBLE);
+        tips.setVisibility(View.VISIBLE);
         videoMenu.setVisibility(View.VISIBLE);
         videoRecord.setVisibility(View.VISIBLE);
         videoTime.setVisibility(View.GONE);
@@ -1121,6 +1133,8 @@ public class CameraShowActivity extends BaseActivity implements IVideoControl.Pl
      */
     private void hindSwitchCamera() {
         videoSwitchCamera.setVisibility(View.GONE);
+        headPic.setVisibility(View.GONE);
+        tips.setVisibility(View.GONE);
     }
 
     /**
