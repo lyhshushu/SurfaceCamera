@@ -212,6 +212,10 @@ public class CameraShowActivity extends BaseActivity implements IVideoControl.Pl
      */
     private int MODE;
     /**
+     * 闪光灯状态
+     */
+    private int flashType = 0;
+    /**
      * 视频保存路径
      */
     private String mVideoPath;
@@ -603,18 +607,17 @@ public class CameraShowActivity extends BaseActivity implements IVideoControl.Pl
                 mCameraTouch.resetScale();
                 break;
             case R.id.video_switch_flash:
-                Object o = videoSwitchFlash.getTag();
-                if (o == null || ((int) o) == 0) {
-                    videoSwitchFlash.setBackgroundResource(R.drawable.light_auto);
-                    videoSwitchFlash.setTag(1);
-                    cameraHelper.flashSwitchState(ICamera2.FlashState.AUTO);
-                } else if (((int) o) == 1) {
-                    videoSwitchFlash.setBackgroundResource(R.drawable.light_off);
-                    videoSwitchFlash.setTag(2);
-                    cameraHelper.flashSwitchState(ICamera2.FlashState.OPEN);
-                } else {
+                if (flashType == 0) {
+                    flashType = 1;
                     videoSwitchFlash.setBackgroundResource(R.drawable.light_on);
-                    videoSwitchFlash.setTag(0);
+//                    cameraHelper.flashSwitchState(ICamera2.FlashState.OPEN);
+                } else if (flashType == 1) {
+                    flashType = 2;
+                    videoSwitchFlash.setBackgroundResource(R.drawable.light_auto);
+                    cameraHelper.flashSwitchState(ICamera2.FlashState.AUTO);
+                } else {
+                    flashType = 0;
+                    videoSwitchFlash.setBackgroundResource(R.drawable.light_off);
                     cameraHelper.flashSwitchState(ICamera2.FlashState.CLOSE);
                 }
                 break;
@@ -858,9 +861,16 @@ public class CameraShowActivity extends BaseActivity implements IVideoControl.Pl
         }
         //拍照
         if (NOW_MODE == AppConstant.VIDEO_TAKE_PHOTO && mCameraPath != null) {
+            if (flashType == 1) {
+                cameraHelper.flashSwitchState(ICamera2.FlashState.OPEN);
+            }
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             cameraHelper.setDeviceRotation(rotation);
+            if (mNowCameraType==ICamera2.CameraType.FRONT){
+                videoPhoto.setRotationY(180);
+            }
             cameraHelper.takePhone(mCameraPath, ICamera2.MediaType.JPEG);
+//            cameraHelper.flashSwitchState(ICamera2.FlashState.CLOSE);
         }
         //录制视频
         if (NOW_MODE == AppConstant.VIDEO_RECORD_MODE) {

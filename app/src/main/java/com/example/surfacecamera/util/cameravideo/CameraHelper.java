@@ -492,7 +492,7 @@ public class CameraHelper implements ICamera2, AwbSeekBar.OnAwbSeekBarChangeList
             //  mPreviewBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
             mPreviewSession.setRepeatingRequest(
                     mPreviewBuilder.build(),
-                    null,
+                    mCaptureCallback,
                     mBackgroundHandler
             );
         } catch (Exception e) {
@@ -609,7 +609,7 @@ public class CameraHelper implements ICamera2, AwbSeekBar.OnAwbSeekBarChangeList
         this.mPhotoPath = path;
         setTakePhotoFlashMode(mPreviewBuilder);
         updatePreview();
-        // lockFocus();
+//         lockFocus();
 
         if (!mNoAFRun) {
             if (mIsAFRequest) {
@@ -907,24 +907,25 @@ public class CameraHelper implements ICamera2, AwbSeekBar.OnAwbSeekBarChangeList
 
     private void setTakePhotoFlashMode(CaptureRequest.Builder builder) {
         if (!mFlashSupported) {
+            Log.e("TAG", "该设备暂不支持 闪光灯");
             return;
         }
         switch (mNowFlashState) {
             case CLOSE:
                 builder.set(CaptureRequest.CONTROL_AE_MODE,
-                        CaptureRequest.CONTROL_AE_MODE_ON);
+                        CameraMetadata.CONTROL_AE_MODE_ON);
                 builder.set(CaptureRequest.FLASH_MODE,
-                        CaptureRequest.FLASH_MODE_SINGLE);
+                        CameraMetadata.FLASH_MODE_OFF);
                 break;
             case OPEN:
                 builder.set(CaptureRequest.CONTROL_AE_MODE,
-                        CaptureRequest.CONTROL_AE_MODE_ON_ALWAYS_FLASH);
+                        CameraMetadata.CONTROL_AE_MODE_ON);
+                builder.set(CaptureRequest.FLASH_MODE,
+                        CameraMetadata.FLASH_MODE_SINGLE);
                 break;
             case AUTO:
                 builder.set(CaptureRequest.CONTROL_AE_MODE,
-                        CaptureRequest.CONTROL_AE_MODE_ON);
-                builder.set(CaptureRequest.FLASH_MODE,
-                        CameraMetadata.FLASH_MODE_OFF);
+                        CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH);
                 Log.e("mode", "自动闪光灯");
                 break;
             default:
@@ -1035,6 +1036,7 @@ public class CameraHelper implements ICamera2, AwbSeekBar.OnAwbSeekBarChangeList
     }
 
     private int getOrientation(int rotation) {
+
         return (ORIENTATIONS.get(rotation) + mSensorOrientation + 270) % 360;
     }
 
